@@ -5,13 +5,16 @@ import { Scenes } from 'telegraf';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  private readonly ALLOWED_USER_IDS: number[] = [2012610435];
-
   public canActivate(context: ExecutionContext): boolean {
     const ctx = TelegrafExecutionContext.create(context);
     const { from } = ctx.getContext<Scenes.SceneContext>();
 
-    if (isNil(from) || !includes(this.ALLOWED_USER_IDS, from.id)) {
+    const ALLOWED_USER_IDS = (process.env.TELEGRAM_ALLOWED_USER_IDS || '')
+      .split(',')
+      .filter((id) => id.trim() !== '')
+      .map((id) => parseInt(id, 10));
+
+    if (isNil(from) || !includes(ALLOWED_USER_IDS, from.id)) {
       throw new TelegrafException(
         'Woops! Đây là tính năng dành riêng cho Thúy Hà!',
       );

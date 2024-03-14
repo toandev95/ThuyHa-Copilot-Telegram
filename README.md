@@ -42,10 +42,11 @@ Thúy Hà Copilot là một Chatbot được xây dựng trên nền tảng Tele
 Tạo file `.env` trong thư mục gốc của dự án và thêm các biến môi trường sau:
 
 ```bash
-OPENAI_API_KEY='sk-xxx'
-OPENAI_BASE_URL=''
+OPENAI_API_KEY='sk-xxx' # API Key của OpenAI
+OPENAI_BASE_URL='' # URL của OpenAI API
 
-TELEGRAM_BOT_TOKEN=''
+TELEGRAM_ALLOWED_USER_IDS='id1,id2' # ID của người dùng được phép sử dụng bot
+TELEGRAM_BOT_TOKEN='' # Token của bot Telegram
 
 PG_HOST=''
 PG_PORT=5432
