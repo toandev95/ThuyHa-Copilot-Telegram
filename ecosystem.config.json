@@ -1,0 +1,8 @@
+{
+  "apps": [
+    {
+      "name": "THUYHA_COPILOT_TELEGRAM",
+      "script": "./dist/main.js"
+    }
+  ]
+}
