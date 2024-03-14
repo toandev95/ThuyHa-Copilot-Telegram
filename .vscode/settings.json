@@ -3,5 +3,9 @@
   "editor.codeActionsOnSave": [
     "source.addMissingImports",
     "source.fixAll.eslint"
-  ]
+  ],
+  "markdownlint.config": {
+    "default": true,
+    "MD033": { "allowed_elements": ["p", "img"] }
+  }
 }

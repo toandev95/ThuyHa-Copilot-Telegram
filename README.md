@@ -1,6 +1,17 @@
 # Thúy Hà Copilot
 
-Thúy Hà Copilot là một Chatbot được xây dựng trên nền tảng Telegram, sử dụng OpenAI API để tạo ra các câu trả lời tự nhiên và thông minh.
+Thúy Hà Copilot là một chatbot chạy trên ứng dụng Telegram, được xây dựng trên NestJS và sử dụng mô hình ngôn ngữ lớn của OpenAI. Chatbot được cung cấp khả năng ghi nhớ thông qua Langchain và PostgreSQL, giúp tăng cường khả năng tương tác tự nhiên và thông minh với người dùng.
+
+## Mẫu hội thoại
+
+<p align="center">
+  <img src="demo.jpg" alt="Demo" height="400" />
+</p>
+
+## Tính năng
+
+- Kết hợp Langchain và PostgreSQL để lưu trữ và truy xuất thông tin từ các hội thoại trước đó. Tăng cường khả năng tương tác tự nhiên và thông minh với người dùng.
+- Retrieval QA: Trả lời các câu hỏi dựa trên kiến thức đã học từ các nguồn dữ liệu khác như tài liệu PDF, DOCX, ... (đang phát triển).
 
 ## Yêu cầu
 
@@ -41,7 +52,7 @@ Thúy Hà Copilot là một Chatbot được xây dựng trên nền tảng Tele
 
 Tạo file `.env` trong thư mục gốc của dự án và thêm các biến môi trường sau:
 
-```bash
+```shell
 OPENAI_API_KEY='sk-xxx' # API Key của OpenAI
 OPENAI_BASE_URL='' # URL của OpenAI API
 
