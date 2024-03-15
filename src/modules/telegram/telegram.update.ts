@@ -1,5 +1,5 @@
 import { UseFilters, UseGuards } from '@nestjs/common';
-import { Ctx, On, Start, Update } from 'nestjs-telegraf';
+import { Ctx, Hears, On, Start, Update } from 'nestjs-telegraf';
 import { Scenes } from 'telegraf';
 import { Message } from 'telegraf/typings/core/types/typegram';
 
@@ -15,13 +15,47 @@ export class TelegramUpdate {
 
   @Start()
   public async start(@Ctx() ctx: Scenes.SceneContext): Promise<void> {
-    await ctx.sendChatAction('typing');
+    const intervalId = setInterval(() => {
+      ctx.sendChatAction('typing');
+    }, 6000);
 
-    const response = await this.telegramService.sendMessage(
-      ctx.from!.id.toString(),
-      'Người dùng đã bắt đầu cuộc trò chuyện, hãy chào hỏi người dùng.',
-    );
-    await ctx.reply(response);
+    try {
+      await ctx.sendChatAction('typing');
+
+      const response = await this.telegramService.sendMessage(
+        ctx.from!.id.toString(),
+        // On behalf of the user, say hello to the bot.
+        'Người dùng đã bắt đầu cuộc trò chuyện, hãy chào hỏi người dùng.',
+      );
+      await ctx.reply(response, { parse_mode: 'Markdown' });
+    } catch (error) {
+      throw error;
+    } finally {
+      clearInterval(intervalId);
+    }
+  }
+
+  @Hears(/^\/qa\s(.+)/)
+  public async onQA(@Ctx() ctx: Scenes.SceneContext): Promise<void> {
+    const intervalId = setInterval(() => {
+      ctx.sendChatAction('typing');
+    }, 6000);
+
+    try {
+      await ctx.sendChatAction('typing');
+
+      const { from, text } = ctx.message as Message.TextMessage;
+      const message = text.match(/^\/qa\s(.+)/)![1];
+      const response = await this.telegramService.sendQuestion(
+        from!.id.toString(),
+        message,
+      );
+      await ctx.reply(response, { parse_mode: 'Markdown' });
+    } catch (error) {
+      throw error;
+    } finally {
+      clearInterval(intervalId);
+    }
   }
 
   @On('text')
@@ -37,6 +71,31 @@ export class TelegramUpdate {
       const response = await this.telegramService.sendMessage(
         from!.id.toString(),
         message,
+      );
+      await ctx.reply(response, { parse_mode: 'Markdown' });
+    } catch (error) {
+      throw error;
+    } finally {
+      clearInterval(intervalId);
+    }
+  }
+
+  @On('document')
+  public async onDocument(@Ctx() ctx: Scenes.SceneContext): Promise<void> {
+    const intervalId = setInterval(() => {
+      ctx.sendChatAction('typing');
+    }, 6000);
+
+    try {
+      await ctx.sendChatAction('typing');
+
+      const { from, document } = ctx.message as Message.DocumentMessage;
+      const { href: url } = await ctx.telegram.getFileLink(document.file_id);
+      await this.telegramService.ingest(ctx.from!.id.toString(), document, url);
+
+      const response = await this.telegramService.sendMessage(
+        from!.id.toString(),
+        'Người dùng đã gửi tài liệu, hãy hỏi người dùng cần gì.',
       );
       await ctx.reply(response, { parse_mode: 'Markdown' });
     } catch (error) {
