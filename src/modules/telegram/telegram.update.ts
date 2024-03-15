@@ -95,7 +95,7 @@ export class TelegramUpdate {
 
       const response = await this.telegramService.sendMessage(
         from!.id.toString(),
-        'Người dùng đã gửi tài liệu, hãy hỏi người dùng cần gì.',
+        `Người dùng đã gửi tài liệu tên là "${document.file_name}" cho bạn, hãy hỏi người dùng cần thông tin gì trong các tài liệu này.`,
       );
       await ctx.reply(response, { parse_mode: 'Markdown' });
     } catch (error) {
