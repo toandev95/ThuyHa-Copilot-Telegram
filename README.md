@@ -53,7 +53,7 @@ Thúy Hà Copilot là một chatbot chạy trên ứng dụng Telegram, được
 Tạo file `.env` trong thư mục gốc của dự án và thêm các biến môi trường sau:
 
 ```shell
-GOOGLE_API_KEY='' # API Key của Google Cloud Platform
+GOOGLE_API_KEY='' # API Key của Google Cloud Platform (https://ai.google.dev/tutorials/setup)
 
 TELEGRAM_ALLOWED_USER_IDS='id1,id2' # ID của người dùng Telegram được phép truy cập
 TELEGRAM_BOT_TOKEN='' # Token của bot Telegram
